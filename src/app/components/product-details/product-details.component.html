@@ -1,127 +1,51 @@
-<!-- <div *ngIf="product" class="detail-section">
-    <div class="container-fluid">
-
-        <img src="{{ product.images[0].imageUrl }}" class="detail-img">
-
-        <h3>{{ product.name }}</h3>
-        <div class="price">{{ product.unitPrice | currency:'USD' }}</div>
-        <button (click)="addToCart()" class="btn btn-primary btn-sm">Add to cart</button>
-
-        <hr>
-        <h4>Description</h4>
-        <p>{{ product.productDescription }}</p>
-
-        <a routerLink="/products" class="mt-5">Back to Product List</a>
-    </div>
-</div> -->
-<html>
-  <body>
-    <div class="card-wrapper">
-      <div class="card">
-        <!-- card left -->
-        <div class="product-imgs">
-          <div class="img-display">
-            <div class="img-showcase">
-              <img src="../../../assets/shoes_images/shoe_1.jpg" alt="shoe image" />
-              <img src="../../../assets/shoes_images/shoe_2.jpg" alt="shoe image" />
-              <img src="../../../assets/shoes_images/shoe_3.jpg" alt="shoe image" />
-              <img src="../../../assets/shoes_images/shoe_4.jpg" alt="shoe image" />
-            </div>
-          </div>
-          <div class="img-select">
-            <div class="img-item">
-              <a href="#" data-id="1">
-                <img
-                  src="../../../assets/shoes_images/shoe_1.jpg"
-                  alt="shoe image"
-                />
-              </a>
-            </div>
-            <div class="img-item">
-              <a href="#" data-id="2">
-                <img
-                  src="../../../assets/shoes_images/shoe_2.jpg"
-                  alt="shoe image"
-                />
-              </a>
-            </div>
-            <div class="img-item">
-              <a href="#" data-id="3">
-                <img
-                  src="../../../assets/shoes_images/shoe_3.jpg"
-                  alt="shoe image"
-                />
-              </a>
-            </div>
-            <div class="img-item">
-              <a href="#" data-id="4">
-                <img
-                  src="../../../assets/shoes_images/shoe_4.jpg"
-                  alt="shoe image"
-                />
-              </a>
-            </div>
-          </div>
+<div class="card-wrapper" *ngIf="product">
+  <div class="card">
+    <!-- card left -->
+    <div class="product-imgs">
+      <div class="img-display">
+        <div class="img-showcase">
+          <img *ngFor="let image of product.images" [src]="image.imageUrl" alt="product image" />
         </div>
-        <!-- card right -->
-        <div class="product-content">
-          <h2 class="product-title">nike shoes</h2>
-          <a href="#" class="product-link">visit nike store</a>
-          <div class="product-rating">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-            <span>4.7(21)</span>
-          </div>
-
-          <div class="product-price">
-            <p class="last-price">Old Price: <span>$257.00</span></p>
-            <p class="new-price">New Price: <span>$249.00 (5%)</span></p>
-          </div>
-
-          <div class="product-detail">
-            <h2>about this item:</h2>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eveniet
-              veniam tempora fuga tenetur placeat sapiente architecto illum soluta
-              consequuntur, aspernatur quidem at sequi ipsa!
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur,
-              perferendis eius. Dignissimos, labore suscipit. Unde.
-            </p>
-            <ul>
-              <li>Color: <span>Black</span></li>
-              <li>Available: <span>in stock</span></li>
-              <li>Category: <span>Shoes</span></li>
-              <li>Shipping Area: <span>All over the world</span></li>
-              <li>Shipping Fee: <span>Free</span></li>
-            </ul>
-          </div>
+      </div>
+      <div class="img-select">
+        <div *ngFor="let image of product.images" class="img-item">
+          <a (click)="onImageSelect(image)">
+            <img [src]="image.imageUrl" alt="product image" />
+          </a>
         </div>
       </div>
     </div>
-  </body>
-  <script>
-    const imgs = document.querySelectorAll('.img-select a');
-    const imgBtns = [...imgs];
-    let imgId = 1;
+    <!-- card right -->
+    <div class="product-content">
+      <h2 class="product-title">{{ product.name }}</h2>
+      <a class="product-link">visit store</a>
+      <div class="product-rating">
+        <i class="fas fa-star" *ngFor="let star of [].constructor(ratingDetails[0])"></i>
+        <i class="fas fa-star-half-alt" *ngIf="ratingDetails[1] > 0"></i>
+        <i class="far fa-star" *ngFor="let star of [].constructor(ratingDetails[2])"></i>
+        <span>{{ rating.toFixed(1) }} (21)</span>
+      </div>
 
-    imgBtns.forEach((imgItem) => {
-        imgItem.addEventListener('click', (event) => {
-            event.preventDefault();
-            imgId = imgItem.dataset.id;
-            slideImage();
-        });
-    });
+      <div class="product-price">
+        <p class="last-price">Old Price: <span>{{ product.unitPrice * 1.1 | currency:'USD' }}</span></p>
+        <p class="new-price">New Price: <span>{{ product.unitPrice| currency:'USD' }} (10%)</span></p>
+      </div>
 
-    function slideImage() {
-        const displayWidth = document.querySelector('.img-showcase img:first-child').clientWidth;
-        document.querySelector('.img-showcase').style.transform = `translateX(${- (imgId - 1) * displayWidth}px)`;
-    }
-
-    window.addEventListener('resize', slideImage);
-</script>
-</html>
+      <div class="product-detail">
+        <h2>About this item:</h2>
+        <p>{{ product.productDescription }}</p>
+        <ul>
+          <li>Available: <span>{{ product.unitsInStock > 0 ? 'In stock' : 'Out of stock' }}</span></li>
+          <li>Date Created: <span>{{ product.dateCreated | date }}</span></li>
+          <li>Last Updated: <span>{{ product.lastUpdated | date }}</span></li>
+        </ul>
+      </div>
+      <div>
+        <button (click)="addToCart()" class="btn btn-primary btn-sm">Add to cart</button>
+      </div>
+      <div>
+        <a routerLink="/products" class="mt-5">Back to Product List</a>
+      </div>
+    </div>
+  </div>
+</div>
