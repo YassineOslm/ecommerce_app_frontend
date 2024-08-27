@@ -92,8 +92,6 @@ export class ProductListComponent implements OnInit {
 
     this.previousCategoryId = this.currentCategoryId;
 
-    console.log(`currentCategoryId=${this.currentCategoryId}, thePageNumber=${this.thePageNumber}`);
-
     // now get the products to the given category id
     this.productService.getProductListPaginate(this.thePageNumber - 1,
        this.thePageSize,
@@ -108,10 +106,10 @@ export class ProductListComponent implements OnInit {
 
   processResult() {
     return (data: any) => {
-      this.products = data._embedded.products;
-      this.thePageNumber = data.page.number + 1;
-      this.thePageSize = data.page.size;
-      this.theTotalElements = data.page.totalElements;
+      this.products = data.content;
+      this.thePageNumber = data.number + 1;
+      this.thePageSize = data.size;
+      this.theTotalElements = data.totalElements;
     };
   }
 

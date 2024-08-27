@@ -1,0 +1,300 @@
+######################################## MOBILES ########################################
+
+#Apple
+
+IPhone SE:
+--> Label : "IPhone SE"
+--> Prix : 529,00 euros
+
+IPhone 14:
+--> Label : "IPhone 14"
+--> Prix : 869,00 euros
+
+IPhone 15:
+--> Label : "IPhone 15"
+--> Prix : 969,00 euros
+
+IPhone 15 Pro:
+--> Label : "IPhone 15 Pro"
+--> Prix : 1229,00 euros
+
+IPhone 15 Pro Max:
+--> Label : "IPhone 15 Pro Max"
+--> Prix : 1479,00 euros
+
+#Oneplus
+
+OnePlus 12:
+--> Label : "OnePlus 12"
+--> Prix : 849,00 euros
+
+
+OnePlus 12R:
+--> Label : "OnePlus 12R"
+--> Prix : 549,00 euros
+
+
+OnePlus Nord 3:
+--> Label : "OnePlus Nord 3 5G"
+--> Prix : 349,00 euros
+
+OnePlus Open:
+--> Label : "OnePlus Open"
+--> Prix : 1449,00 euros
+
+OnePlus Nord CE4 Lite:
+--> Label : "OnePlus Nord CE4 Lite 5G"
+--> Prix : 299,00 euros
+
+
+#Samsung
+
+Samsung Galaxy S23 FE:
+--> Label : "Samsung Galaxy S23 FE"
+--> Prix : 599,99 euros
+
+Samsung Galaxy Z Flip6:
+--> Label : "Samsung S23 FE"
+--> Prix : 1199,99 euros
+
+Samsung Galaxy S24:
+--> Label : "Samsung Galaxy S24"
+--> Prix : 899,99 euros
+
+Samsung Galaxy Z Fold6:
+--> Label : "Samsung Galaxy Z Fold6"
+--> Prix : 1999,99 euros
+
+Samsung Galaxy S24 Ultra:
+--> Label : "Samsung Galaxy S24 Ultra"
+--> Prix : 1499,99 euros
+
+#Google
+
+Google Pixel 8a:
+--> Label : "Google Pixel 8a"
+--> Prix : 499,99 euros
+
+Google Pixel 9:
+--> Label : "Google Pixel 9"
+--> Prix : 899,99 euros
+
+Google Pixel 9 Pro:
+--> Label : "Google Pixel 9 Pro"
+--> Prix : 1099,99 euros
+
+Google Pixel 9 Pro XL:
+--> Label : "Google Pixel 9 Pro XL"
+--> Prix : 1199,99 euros
+
+Google Pixel 9 Pro Fold:
+--> Label : "Google Pixel 9 Pro Fold"
+--> Prix : 1899,99 euros
+
+
+#Xiami
+
+Xiami 13T:
+--> Label : "Xiami 13T"
+--> Prix : 649,99 euros
+
+Xiami 14:
+--> Label : "Xiami 14"
+--> Prix : 1099,99 euros
+
+Xiami Redmi Note 13:
+--> Label : "Xiami Redmi Note 13"
+--> Prix : 199,99 euros
+
+Xiami Redmi Note 13 Pro:
+--> Label : "Xiami Redmi Note 13 Pro 5G"
+--> Prix : 399,99 euros
+
+Xiami Redmi Note 13 Pro+:
+--> Label : "Xiami Redmi Note 13 Pro+ 5G"
+--> Prix : 499,99 euros
+
+######################################## LAPTOPS ########################################
+
+#Apple
+
+MacBook Pro 14 pouces:
+--> Label : "MacBook Pro 14'' Puce M3"
+--> Prix : 2029,00 euros
+
+MacBook Pro 16 pouces:
+--> Label : "MacBook Pro 16'' Puce M3"
+--> Prix : 3049,00 euros
+
+MacBook Air 13 pouces M2:
+--> Label : "MacBook Pro 13'' Puce M2"
+--> Prix : 1199,00 euros
+
+MacBook Air 13 pouces M3:
+--> Label : "MacBook Pro 13'' Puce M3"
+--> Prix : 1299,00 euros
+
+MacBook Air 15 pouces M3:
+--> Label : "MacBook Pro 15'' Puce M3"
+--> Prix : 1599,00 euros
+
+#Lenovo
+
+ThinkPad T14 Gen 5:
+--> Label : "ThinkPad T14 Gen 5 (14'' Intel)"
+--> Prix : 1618,01 euros
+
+ThinkPad P16v Gen 2:
+--> Label : "ThinkPad P16v Gen 2 (16'' Intel)"
+--> Prix : 1978,01 euros
+
+ThinkPad T14s Gen 6:
+--> Label : "ThinkPad T14s Gen 6 (14'' Snapdragon)"
+--> Prix : 2139,00 euros
+
+
+ThinkPad L13 2-en-1 Gen 5:
+--> Label : "ThinkPad L13 2-en-1 Gen 5 (13" Intel)"
+--> Prix : 1368,01 euros
+
+ThinkPad P1 Gen 7:
+--> Label : "ThinkPad P1 Gen 7 (16" Intel)"
+--> Prix : 2751,98 euros
+
+#Asus
+
+ASUS TUF Gaming A14:
+--> Label : "ASUS TUF Gaming A14 (2024)"
+--> Prix : 1699,00 euros
+
+ASUS ProArt PX13:
+--> Label : "ASUS ProArt PX13 (HN7306)"
+--> Prix : 2399,00 euros
+
+ASUS ProArt PX13:
+--> Label : "ASUS Zenbook S16 (UM5606)"
+--> Prix : 1699,00 euros
+
+ASUS ExpertBook B9:
+--> Label : "ASUS ExpertBook B9 (B9403)"
+--> Prix : 2299,00 euros
+
+ASUS ROG Strix G16 (2024):
+--> Label : "ASUS ROG Strix G16 (2024)"
+--> Prix : 1949,00 euros
+
+#Dell
+
+Dell Latitude 3540:
+--> Label : "Dell Latitude 3540"
+--> Prix : 979,31 euros
+
+Dell Latitude 5540:
+--> Label : "Dell Latitude 5540"
+--> Prix : 1154,76 euros
+
+Dell XPS 13:
+--> Label : "Dell XPS 13"
+--> Prix : 1529,55 euros
+
+Dell XPS 14:
+--> Label : "Dell XPS 14"
+--> Prix : 1664,55 euros
+
+Dell XPS 16:
+--> Label : "Dell XPS 16"
+--> Prix : 1754,55 euros
+
+#Hp
+
+HP Envy x360 14'' PC portable 2-en-1:
+--> Label : "HP Envy x360 14'' PC portable 2-en-1"
+--> Prix : 1098,99 euros
+
+HP ProBook 465 16" G11:
+--> Label : "HP ProBook 465 16'' G11"
+--> Prix : 1149,00 euros
+
+HP EliteBook 465 16" G11:
+--> Label : "HP EliteBook 840 14'' G11"
+--> Prix : 2049,00 euros
+
+HP Pavilion Laptop 16:
+--> Label : "HP Pavilion Laptop 16"
+--> Prix : 2049,00 euros
+
+HP Envy 17'' PC portable:
+--> Label : "HP Envy 17'' PC portable"
+--> Prix : 1499,00 euros
+
+
+######################################## TABLETTES ########################################
+
+#Apple
+
+IPad Pro 11 pouces:
+--> Label : "iPad Pro 11 pouces"
+--> Prix : 1219,00 euros
+
+IPad Pro 13 pouces:
+--> Label : "iPad Pro 13 pouces"
+--> Prix : 1569,00 euros
+
+IPad Air 11 pouces:
+--> Label : "iPad Air 11 pouces"
+--> Prix : 719,00 euros
+
+IPad Air 13 pouces:
+--> Label : "iPad Air 13 pouces"
+--> Prix : 969,00 euros
+
+IPad Mini:
+--> Label : "iPad Mini"
+--> Prix : 609,00 euros
+
+#Samsung
+
+Samsung GalaxyTab S9 FE:
+--> Label : "Samsung GalaxyTab S9 FE"
+--> Prix : 434,00 euros
+
+Samsung GalaxyTab S9 FE+:
+--> Label : "Samsung GalaxyTab S9 FE+  (Wi-Fi, 12.4'')"
+--> Prix : 699,00 euros
+
+Samsung GalaxyTab S9:
+--> Label : "Samsung GalaxyTab S9 5G (11'')"
+--> Prix : 918,00 euros
+
+Samsung GalaxyTab S9+:
+--> Label : "Samsung GalaxyTab S9+ (5G, 12,4'')"
+--> Prix : 1129,00 euros
+
+Samsung GalaxyTab S9 Ultra:
+--> Label : "Samsung GalaxyTab S9 Ultra (Wi-Fi, 14.6'')"
+--> Prix : 1199,00 euros
+
+######################################## ECRANS PC ########################################
+
+
+Ecran PC - ACER - EK241YEbi:
+--> Label : "ACER - EK241YEbi - 23,8" FHD"
+--> Prix : 79,99 euros
+
+Alienware AW3418DW Gaming 34 Quad HD
+--> Label : "Alienware AW3418DW Gaming 34 Quad HD"
+--> Prix : 1987,23 euros
+
+DELL UltraSharp UP2720Q - LCD 4K Ultra HD
+--> Label : "DELL UltraSharp UP2720Q - LCD 4K Ultra HD"
+--> Prix : 1555,17 euros
+
+Lenovo ThinkVision P34w-20
+--> Label : "Lenovo ThinkVision P34w-20"
+--> Prix : 1530,00 euros
+
+ACER XR382CQK - 37.5'' - 3840 x 1600
+--> Label : "ACER XR382CQK - 37.5'' - 3840 x 1600"
+--> Prix : 1408,99 euros
+
+

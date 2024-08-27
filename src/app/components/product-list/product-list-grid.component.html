@@ -6,7 +6,7 @@
         <div *ngFor="let tempProduct of products" class="col-md-3">
           <div class="product-box">
             <a routerLink="/products/{{tempProduct.id}}">
-              <img src="{{ tempProduct.imageUrl }}" class="img-responsive" />
+              <img src="{{ tempProduct.images[0].imageUrl }}" class="img-responsive" />
             </a>
             <a routerLink="/products/{{tempProduct.id}}">
               <h1>{{ tempProduct.name }}</h1>

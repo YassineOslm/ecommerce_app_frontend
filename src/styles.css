@@ -19,7 +19,8 @@ body{
   line-height:1.625;
   color:#666;
   -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale
+  -moz-osx-font-smoothing:grayscale;
+  line-height: 1.5;
 }
 
 ul{
@@ -106,7 +107,7 @@ a,a:hover{
 
 .page-wrapper{
   overflow:hidden;
-  background:#e5e5e5;
+  background:#fff;
   padding-bottom:8vh
 }
 
@@ -117,7 +118,8 @@ a,a:hover{
 
 .main-content{
   padding-top:116px;
-  min-height:100vh
+  min-height:100vh;
+  background-color: #fff;
 }
 
 aside.menu-sidebar.d-none.d-lg-block.clr{
@@ -134,7 +136,7 @@ aside.menu-sidebar.d-none.d-lg-block.clr{
 */
 
 .header-desktop{
-  background:#0da8e4;
+  background:#0d6efd;
   -webkit-box-shadow:0 2px 5px 0 rgba(0,0,0,.1);
   -moz-box-shadow:0 2px 5px 0 rgba(0,0,0,.1);
   box-shadow:0 2px 5px 0 rgba(0,0,0,.1);
@@ -250,7 +252,7 @@ input.au-input.au-input-xl{
 }
 
 .total{
-  background:#205b8d;
+  background:#0da8e4;
   line-height:43px;
   color:#fff;
   border-radius:30px;
@@ -283,11 +285,11 @@ input.au-input.au-input-xl{
   right:0;
   min-width:95px;
   color:#fff;
-  border:1px solid #205b8d;
+  border:1px solid #0da8e4;
   -webkit-border-radius:3px;
   -moz-border-radius:3px;
   border-radius:43px;
-  background:#205b8d
+  background:#0da8e4
 }
 
 .au-btn-submit:hover{
@@ -566,7 +568,7 @@ input.au-input.au-input-xl{
 */
 
 .form-area{
-  background:#e5e5e5;
+  background:#fff;
   position:relative;
   margin-bottom:45px;
   padding:50px 20px;
@@ -628,7 +630,7 @@ input.au-input.au-input-xl{
   height:22px;
   width:22px;
   background-color:#fff!important;
-  border:2px solid #e5e5e5;
+  border:2px solid #fff;
   -webkit-border-radius:2px;
   -moz-border-radius:2px;
   border-radius:2px
@@ -720,7 +722,8 @@ table.table.table-bordered th{
   color:#0da8e4
 }
 .detail-section{
-  margin-top:60px
+  margin-top:60px;
+  background-color: #fff;
 }
 
 .detail-img {
@@ -827,7 +830,7 @@ footer ul li{
       font-size:22px;
       float:left;
       margin-top:16px;
-      color:#205b8d;
+      color:#0da8e4;
       margin-left:15px
   }
   .header-mobile .header-mobile-bar{
@@ -850,7 +853,7 @@ footer ul li{
       padding-left:0
   }
    .page-wrapper{
-      background:#e5e5e5;
+      background:#fff;
       padding-bottom:12vh
   }
    .main-content{
@@ -922,7 +925,7 @@ footer ul li{
       font-size:22px;
       float:left;
       margin-top:16px;
-      color:#205b8d;
+      color:#0da8e4;
       margin-left:15px
   }
       .header-wrap2{
@@ -973,7 +976,7 @@ footer ul li{
       font-size:22px;
       float:left;
       margin-top:16px;
-      color:#205b8d;
+      color:#0da8e4;
       margin-left:15px
   }
   .footer-pagination{
@@ -992,11 +995,11 @@ footer ul li{
       right:10px;
       min-width:85px;
       color:#fff;
-      border:1px solid #205b8d;
+      border:1px solid #0da8e4;
       -webkit-border-radius:3px;
       -moz-border-radius:3px;
       border-radius:0;
-      background:#205b8d
+      background:#0da8e4
   }
   input.au-input.au-input-xl{
       border-radius:0!important;
@@ -1025,11 +1028,11 @@ footer ul li{
       margin-left:6px
   }
   .total{
-      background:#205b8d;
+      background:#0da8e4;
       line-height:30px;
       color:#fff;
       border-radius:30px;
-      border:1px solid #205b8d;
+      border:1px solid #0da8e4;
       float:left;
       margin-top:9px;
       padding-left:12px

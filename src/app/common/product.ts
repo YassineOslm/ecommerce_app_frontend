@@ -1,12 +1,12 @@
+import { Image } from "./image";
+
 export class Product {
 
   constructor(public id: string,
-              public sku: string,
               public name: string,
-              public description: string,
+              public productDescription: string,
               public unitPrice: number,
-              public imageUrl: string,
-              public active: boolean,
+              public images: Image[],
               public unitsInStock: number,
               public dateCreated: Date,
               public lastUpdated: Date
