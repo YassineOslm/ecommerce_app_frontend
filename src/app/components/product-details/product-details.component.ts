@@ -5,28 +5,31 @@ import { Product } from 'src/app/common/product';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 import { Image } from 'src/app/common/image';
+import { CommentService } from 'src/app/services/comment.service';
 
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
-  styleUrls: ['./product-details.component.css']
+  styleUrls: ['./product-details.component.css'],
 })
 export class ProductDetailsComponent implements OnInit, AfterViewInit {
-
   product!: Product;
   currentImageIndex = 0;
-  rating :number = 2.1;
-  ratingDetails :number[] = this.getRatingDetails(this.rating);
+  rating: number = 0;
+  commentCount: number = 0;
+  ratingDetails: number[] = [];
 
-  constructor(private productService: ProductService,
-              private cartService: CartService,
-              private route: ActivatedRoute) { }
+  constructor(
+    private productService: ProductService,
+    private cartService: CartService,
+    private commentService: CommentService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
       this.handleProductDetails();
     });
-
   }
 
   ngAfterViewInit(): void {
@@ -42,12 +45,36 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
         this.product = data;
         this.currentImageIndex = 0;
         this.updateImageDisplay();
+
+        this.loadCommentData();
       }
     );
   }
 
+  loadCommentData() {
+    this.commentService.getCommentCount(+this.product.id).subscribe({
+      next: (count) => {
+        this.commentCount = count;
+        console.log("commentCount:", this.commentCount);
+      },
+      error: (err) => {
+        console.error('Error fetching comment count', err);
+      }
+    });
+
+    this.commentService.getAverageRating(+this.product.id).subscribe({
+      next: (average) => {
+        this.rating = average;
+        console.log("rating:", this.rating);
+        this.ratingDetails = this.getRatingDetails(this.rating);
+      },
+      error: (err) => {
+        console.error('Error fetching average rating', err);
+      }
+    });
+  }
+
   addToCart() {
-    console.log(`Adding to cart: ${this.product.name}, ${this.product.unitPrice}`);
     const theCartItem = new CartItem(this.product);
     this.cartService.addToCart(theCartItem);
   }
@@ -56,7 +83,9 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     const imgShowcase = document.querySelector('.img-showcase') as HTMLElement;
     const images = document.querySelectorAll('.img-showcase img');
     const displayWidth = images[0].clientWidth;
-    const index = this.product.images.findIndex(img => img.imageUrl === image.imageUrl);
+    const index = this.product.images.findIndex(
+      (img) => img.imageUrl === image.imageUrl
+    );
     imgShowcase.style.transform = `translateX(${-index * displayWidth}px)`;
     this.currentImageIndex = index;
   }
@@ -66,7 +95,9 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     const images = document.querySelectorAll('.img-showcase img');
     if (images.length > 0) {
       const displayWidth = images[0].clientWidth;
-      imgShowcase.style.transform = `translateX(${-this.currentImageIndex * displayWidth}px)`;
+      imgShowcase.style.transform = `translateX(${
+        -this.currentImageIndex * displayWidth
+      }px)`;
     }
   }
 

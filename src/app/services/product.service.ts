@@ -1,8 +1,8 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from '../common/product';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { ProductCategory } from '../common/product-category';
 
 @Injectable({

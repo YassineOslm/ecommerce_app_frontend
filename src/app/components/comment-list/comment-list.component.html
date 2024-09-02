@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
+  <body>
+    <div class="main-content">
+      <section class="testimonials">
+        <div *ngFor="let comment of comments; let i = index;"
+        [style.animation-delay]="getDelay(i)" class="testimonial-box-container">
+          <div class="testimonial-box">
+            <div class="box-top">
+              <div class="profile">
+                <div class="profile-img">
+
+                  <img [src]= "getImage(comment)" />
+                </div>
+                <div class="name-user">
+                  <strong>{{ getFullName(comment) }}</strong>
+                  <span>{{ getPostedDate(comment) }}</span>
+                </div>
+              </div>
+              <div class="reviews">
+                <i class="fas fa-star fa-lg" *ngFor="let star of [].constructor(getRatingDetails(comment.grade)[0])"></i>
+                <i class="fas fa-star-half-alt fa-lg" *ngIf="getRatingDetails(comment.grade)[1] > 0"></i>
+                <i class="far fa-star fa-lg" *ngFor="let star of [].constructor(getRatingDetails(comment.grade)[2])"></i>
+              </div>
+            </div>
+            <div class="client-comment">
+              <p>{{ comment.comment }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="nav_links">
+        <span class="left-link">
+          <i
+            class="fas fa-long-arrow-alt-left"
+            aria-hidden="true"
+            style="color: blue"
+          ></i>
+          <a routerLink="/products/{{ productId }}"
+            >Back to Product Details Page</a
+          >
+        </span>
+        <span>
+          <ngb-pagination
+            [(page)]="thePageNumber"
+            [pageSize]="thePageSize"
+            [collectionSize]="theTotalElements"
+            [maxSize]="5"
+            [boundaryLinks]="true"
+            (pageChange)="loadComments()"
+          >
+          </ngb-pagination>
+        </span>
+        <span class="right-link">
+          <a routerLink="/products/{{ productId }}/add-new-comment">Add a new comment</a>
+          <i
+            class="fas fa-long-arrow-alt-right"
+            aria-hidden="true"
+            style="color: blue"
+          ></i>
+        </span>
+      </div>
+      <div style="display: flex; justify-content: center; align-items: center">
+        <form [formGroup]="filterForm" style="display: flex; gap: 15px;">
+          <div class="filter-section">
+            <label for="filter-by">Filter by:</label>
+          </div>
+          <span>
+            <input
+              type="radio"
+              id="date"
+              formControlName="filterBy"
+              value="date"
+            />
+            <label>Date</label>
+          </span>
+          <span>
+            <input
+              type="radio"
+              id="rating"
+              formControlName="filterBy"
+              value="rating"
+            />
+            <label>Rating</label>
+          </span>
+          <span>
+            <select *ngIf="filterForm.get('filterBy')?.value === 'date'" formControlName="sortOrder">
+              <option value="asc">From Earliest to Latest</option>
+              <option value="desc">From Latest to Earliest</option>
+            </select>
+            <select *ngIf="filterForm.get('filterBy')?.value === 'rating'" formControlName="sortOrder">
+              <option value="asc">From Lowest Rating to Highest Rating</option>
+              <option value="desc">From Highest Rating to Lowest Rating</option>
+            </select>
+          </span>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

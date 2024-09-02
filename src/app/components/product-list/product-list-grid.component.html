@@ -5,16 +5,24 @@
         <!--loop over the collection of products-->
         <div *ngFor="let tempProduct of products" class="col-md-3">
           <div class="product-box">
-            <a routerLink="/products/{{tempProduct.id}}">
-              <img src="{{ tempProduct.images[0].imageUrl }}" class="img-responsive" />
+            <a routerLink="/products/{{ tempProduct.id }}">
+              <img
+                src="{{ tempProduct.images[0].imageUrl }}"
+                class="img-responsive"
+              />
             </a>
-            <a routerLink="/products/{{tempProduct.id}}">
+            <a routerLink="/products/{{ tempProduct.id }}">
               <h1>{{ tempProduct.name }}</h1>
             </a>
             <div class="price">
-              {{ tempProduct.unitPrice | currency : "USD" }}
+              {{ tempProduct.unitPrice | currency : "EUR" }}
             </div>
-            <button (click)="addToCart(tempProduct)" class="btn btn-primary btn-sm">Add to cart</button>
+            <button
+              (click)="addToCart(tempProduct)"
+              class="btn btn-primary btn-sm"
+            >
+              Add to cart
+            </button>
           </div>
         </div>
         <!-- if products empty then display a message-->
@@ -30,21 +38,20 @@
       <!-- begin footer -->
       <div class="footer-pagination">
         <div class="row">
-          <div class="col-md-6"></div>
-          <div class="col-md-6">
-            <div class="row">
-              <div class="col-md-9" style="padding-left: 30%;">
+          <div style="display: flex; justify-content: flex-end;">
+            <div class="row" style=" display: flex; justify-content: space-between; width: 70%;">
+              <span style="flex: 1; display: flex; justify-content: center">
                 <ngb-pagination
                   [(page)]="thePageNumber"
-                  [pageSize] = "thePageSize"
+                  [pageSize]="thePageSize"
                   [collectionSize]="theTotalElements"
                   [maxSize]="5"
                   [boundaryLinks]="true"
                   (pageChange)="listProducts()"
                 >
                 </ngb-pagination>
-              </div>
-              <div class="col-md-3 mt-2" style="text-align: right;">
+              </span>
+              <span style=" flex: 1; display: flex; justify-content: center; align-items: center;">
                 <span class="mr-2">Page Size</span>
                 <select #myPageSelect (change)="updatePage(myPageSelect.value)">
                   <option>2</option>
@@ -53,14 +60,57 @@
                   <option>20</option>
                   <option>50</option>
                 </select>
-              </div>
+              </span>
+              <span style=" flex: 2; display: flex; justify-content: center; align-items: center;">
+                <form [formGroup]="filterForm" style="display: flex; gap: 5px">
+                  <div class="filter-section">
+                    <label for="filter-by">Filter by:</label>
+                  </div>
+                  <span>
+                    <input
+                      type="radio"
+                      id="price"
+                      formControlName="filterBy"
+                      value="price"
+                    />
+                    <label>Price</label>
+                  </span>
+                  <span>
+                    <input
+                      type="radio"
+                      id="rating"
+                      formControlName="filterBy"
+                      value="rating"
+                    />
+                    <label>Rating</label>
+                  </span>
+                  <span>
+                    <select
+                      *ngIf="filterForm.get('filterBy')?.value === 'price'"
+                      formControlName="sortOrder"
+                    >
+                      <option value="asc">From Cheapest to Highest</option>
+                      <option value="desc">From Highest to Cheapest</option>
+                    </select>
+                    <select
+                      *ngIf="filterForm.get('filterBy')?.value === 'rating'"
+                      formControlName="sortOrder"
+                    >
+                      <option value="asc">
+                        From Lowest to Highest
+                      </option>
+                      <option value="desc">
+                        From Highest to Lowest
+                      </option>
+                    </select>
+                  </span>
+                </form>
+              </span>
             </div>
           </div>
-
         </div>
       </div>
       <!-- end footer -->
-
     </div>
   </div>
 </div>

@@ -13,11 +13,15 @@ import { CartStatusComponent } from './components/cart-status/cart-status.compon
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CommentListComponent } from './components/comment-list/comment-list.component';
+import { AddNewCommentComponent } from './components/add-new-comment/add-new-comment.component';
 
 const routes: Routes = [
   {path: 'checkout', component: CheckoutComponent},
   {path: 'cart-details', component: CartDetailsComponent},
   {path: 'products/:id', component: ProductDetailsComponent},
+  {path: 'products/:id/comments', component: CommentListComponent},
+  {path: 'products/:id/add-new-comment', component: AddNewCommentComponent},
   {path: 'search/:keyword', component: ProductListComponent},
   {path: 'category/:id', component: ProductListComponent},
   {path: 'category', component: ProductListComponent},
@@ -35,7 +39,9 @@ const routes: Routes = [
     ProductDetailsComponent,
     CartStatusComponent,
     CartDetailsComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    CommentListComponent,
+    AddNewCommentComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

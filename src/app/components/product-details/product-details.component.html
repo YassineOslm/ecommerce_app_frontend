@@ -23,12 +23,12 @@
         <i class="fas fa-star" *ngFor="let star of [].constructor(ratingDetails[0])"></i>
         <i class="fas fa-star-half-alt" *ngIf="ratingDetails[1] > 0"></i>
         <i class="far fa-star" *ngFor="let star of [].constructor(ratingDetails[2])"></i>
-        <span>{{ rating.toFixed(1) }} (21)</span>
+        <span style="margin-left: 5px;">{{ rating.toFixed(1) }} ({{ commentCount }})</span>
       </div>
 
       <div class="product-price">
-        <p class="last-price">Old Price: <span>{{ product.unitPrice * 1.1 | currency:'USD' }}</span></p>
-        <p class="new-price">New Price: <span>{{ product.unitPrice| currency:'USD' }} (10%)</span></p>
+        <p class="last-price">Old Price: <span>{{ product.unitPrice * 1.1 | currency:'EUR' }}</span></p>
+        <p class="new-price">New Price: <span>{{ product.unitPrice| currency:'EUR' }} (10%)</span></p>
       </div>
 
       <div class="product-detail">
@@ -43,9 +43,17 @@
       <div>
         <button (click)="addToCart()" class="btn btn-primary btn-sm">Add to cart</button>
       </div>
-      <div>
-        <a routerLink="/products" class="mt-5">Back to Product List</a>
-      </div>
     </div>
   </div>
 </div>
+<div class="nav_links" *ngIf="product">
+  <span class="left-link">
+    <i class="fa fa-long-arrow-left" aria-hidden="true" style="color: blue;"></i>
+    <a routerLink="/products">Back to Product List</a>
+  </span>
+  <span class="right-link">
+    <a routerLink="/products/{{product.id}}/comments">Go to comment List</a>
+    <i class="fa fa-long-arrow-right" aria-hidden="true" style="color: blue;"></i>
+  </span>
+</div>
+

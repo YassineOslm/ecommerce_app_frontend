@@ -4,6 +4,7 @@ import { CartItem } from 'src/app/common/cart-item';
 import { Product } from 'src/app/common/product';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-product-list',
@@ -17,6 +18,8 @@ export class ProductListComponent implements OnInit {
   previousCategoryId: number = 1;
   searchMode: boolean = false;
 
+  filterForm: FormGroup = this.formBuilder.group({});
+
   //new properties for pagination
   thePageNumber: number = 1;
   thePageSize: number = 5;
@@ -26,11 +29,22 @@ export class ProductListComponent implements OnInit {
 
   constructor(private productService: ProductService,
               private cartService: CartService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
       this.listProducts();
+    });
+    // Create the FormGroup using FormBuilder
+    this.filterForm = this.formBuilder.group({
+      filterBy: ['price'],
+      sortOrder: ['asc']
+    });
+
+    this.filterForm.valueChanges.subscribe(values => {
+      console.log('Filter by:', values.filterBy);
+      console.log('Sort order:', values.sortOrder);
     });
   }
 
