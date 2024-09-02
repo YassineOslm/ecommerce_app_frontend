@@ -10,7 +10,7 @@
   </div>
   <form *ngIf="!newCommentAdded" [formGroup]="commentForm" (ngSubmit)="onSubmit()" style="width: 100%; max-width: 600px;">
     <div class="form-row">
-      <label class="title"> :</label>
+      <label class="title"> Select Your Grade:</label>
       <fieldset class="rating">
         <input type="radio" id="star5" name="rating" value="5" (change)="onRatingChanged($event)" /><label class="full"
           for="star5" title="5 stars"></label>
@@ -57,7 +57,7 @@
     </div>
 
     <div class="form-row">
-      <button type="submit" class="btn btn-primary">Submit Comment</button>
+      <button type="submit" class="btn btn-primary" [disabled]="isFormInvalid()">Submit Comment</button>
     </div>
 
     <div class="form-row">

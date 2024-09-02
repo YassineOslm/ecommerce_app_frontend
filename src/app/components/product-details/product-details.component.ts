@@ -55,7 +55,6 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     this.commentService.getCommentCount(+this.product.id).subscribe({
       next: (count) => {
         this.commentCount = count;
-        console.log("commentCount:", this.commentCount);
       },
       error: (err) => {
         console.error('Error fetching comment count', err);
@@ -65,7 +64,6 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     this.commentService.getAverageRating(+this.product.id).subscribe({
       next: (average) => {
         this.rating = average;
-        console.log("rating:", this.rating);
         this.ratingDetails = this.getRatingDetails(this.rating);
       },
       error: (err) => {

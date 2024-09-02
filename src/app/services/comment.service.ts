@@ -23,7 +23,6 @@ export class CommentService {
     const searchUrl =
       `${this.baseUrl}/${productId}/comments?sortBy=${sortBy}&ascending=${ascending}` +
       `&page=${thePage}&size=${thePageSize}`;
-    console.log(searchUrl);
     return this.httpClient.get<GetResponseComments>(searchUrl);
   }
 
