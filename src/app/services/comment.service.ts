@@ -55,6 +55,11 @@ export class CommentService {
     );
   }
 
+  getAverageRatingForProducts(): Observable<{ [productId: number]: number }> {
+    const url = `${this.baseUrl}/average-ratings`;
+    return this.httpClient.get<{ [productId: number]: number }>(url);
+  }
+
 }
 
 interface GetResponseComments {

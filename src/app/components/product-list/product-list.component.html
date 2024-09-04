@@ -1,3 +1,132 @@
-<p *ngFor="let tempProduct of products">
-  {{ tempProduct.name }} :{{ tempProduct.unitPrice | currency: 'USD' }}
-</p>
+<div class="main-content">
+  <div class="section-content section-content-p30">
+    <div class="container-fluid">
+      <div class="row">
+        <!--loop over the collection of products-->
+        <div *ngFor="let tempProduct of products" class="col-md-3">
+          <div class="product-box">
+            <a routerLink="/products/{{ tempProduct.id }}">
+              <img
+                src="{{ tempProduct.images[0].imageUrl }}"
+                class="img-responsive"
+              />
+            </a>
+            <a routerLink="/products/{{ tempProduct.id }}">
+              <h1>{{ tempProduct.name }}</h1>
+            </a>
+            <div class="price">
+              {{ tempProduct.unitPrice | currency : "EUR" }}
+            </div>
+            <div style="display: flex; justify-content: space-around;">
+              <button
+              (click)="addToCart(tempProduct)"
+              class="btn btn-primary btn-sm"
+            >
+              Add to cart
+            </button>
+            <span style="color: #ffc107;">
+              <i class="fas fa-star" *ngFor="let star of [].constructor(productRatings[+tempProduct.id][0])"></i>
+              <i class="fas fa-star-half-alt" *ngIf="productRatings[+tempProduct.id][1] > 0"></i>
+              <i class="far fa-star" *ngFor="let star of [].constructor(+productRatings[+tempProduct.id][2])"></i>
+            </span>
+            </div>
+          </div>
+        </div>
+        <!-- if products empty then display a message-->
+        <div
+          *ngIf="products?.length == 0"
+          class="alert alert-warning col-md-12"
+          role="alert"
+        >
+          No products found.
+        </div>
+      </div>
+
+      <!-- begin footer -->
+      <div class="footer-pagination">
+        <div class="row">
+          <div style="display: flex; justify-content: flex-end;">
+            <div class="row" style=" display: flex; justify-content: space-between; width: 80%;">
+              <span style="flex: 1; display: flex; justify-content: center">
+                <ngb-pagination
+                  [(page)]="thePageNumber"
+                  [pageSize]="thePageSize"
+                  [collectionSize]="theTotalElements"
+                  [maxSize]="5"
+                  [boundaryLinks]="true"
+                  (pageChange)="listProducts()"
+                >
+                </ngb-pagination>
+              </span>
+              <span style=" flex: 1; display: flex; justify-content: center; align-items: center;">
+                <span class="mr-2">Page Size</span>
+                <select #myPageSelect (change)="updatePage(myPageSelect.value)">
+                  <option>2</option>
+                  <option selected="true">5</option>
+                  <option>10</option>
+                  <option>20</option>
+                  <option>50</option>
+                </select>
+              </span>
+              <span style=" flex: 2; display: flex; justify-content: center; align-items: center;">
+                <form [formGroup]="filterForm" style="display: flex; gap: 8px">
+                  <div class="filter-section">
+                    <label for="filter-by">Filter by:</label>
+                  </div>
+                  <span>
+                    <input
+                      type="radio"
+                      id="noFilter"
+                      formControlName="filterBy"
+                      value="noFilter"
+                    />
+                    <label style="margin-left: 3px;">None</label>
+                  </span>
+                  <span>
+                    <input
+                      type="radio"
+                      id="unitPrice"
+                      formControlName="filterBy"
+                      value="unitPrice"
+                    />
+                    <label style="margin-left: 3px;">Price</label>
+                  </span>
+                  <span>
+                    <input
+                      type="radio"
+                      id="rating"
+                      formControlName="filterBy"
+                      value="rating"
+                    />
+                    <label style="margin-left: 3px;">Rating</label>
+                  </span>
+                  <span>
+                    <select
+                      *ngIf="filterForm.get('filterBy')?.value === 'unitPrice'"
+                      formControlName="sortOrder"
+                    >
+                      <option value="asc">From Cheapest to Highest</option>
+                      <option value="desc">From Highest to Cheapest</option>
+                    </select>
+                    <select
+                      *ngIf="filterForm.get('filterBy')?.value === 'rating'"
+                      formControlName="sortOrder"
+                    >
+                      <option value="asc">
+                        From Lowest to Highest
+                      </option>
+                      <option value="desc">
+                        From Highest to Lowest
+                      </option>
+                    </select>
+                  </span>
+                </form>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end footer -->
+    </div>
+  </div>
+</div>

@@ -100,16 +100,12 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   }
 
   getRatingDetails(rating: number): [number, number, number] {
-    // Arrondir la note à un chiffre décimal
     const roundedRating = Math.round(rating * 2) / 2;
 
-    // Calculer le nombre d'étoiles pleines
     const fullStars = Math.floor(roundedRating);
 
-    // Vérifier s'il y a une demi-étoile
     const hasHalfStar = roundedRating % 1 !== 0;
 
-    // Calculer le nombre d'étoiles vides
     const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
 
     return [fullStars, hasHalfStar ? 1 : 0, emptyStars];
