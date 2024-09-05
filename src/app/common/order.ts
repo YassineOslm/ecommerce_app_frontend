@@ -1,6 +1,14 @@
+import { Address } from "./address";
+
 export class Order {
 
-  constructor(public totalQuantity: number,
-    public totalPrice: number) {}
+  constructor(
+    public totalPrice: number,
+    billingAddress : Address,
+    shippingAddress : Address,
+    paymentMethod: string,
+    paymentStatus: string,
+    deliveryMethod: string,
+    deliveryStatus: string) {}
 
 }

@@ -1,14 +1,11 @@
 import { Address } from "./address";
-import { Customer } from "./customer";
+import { User } from "./user";
 import { Order } from "./order";
-import { OrderItem } from "./order-item";
+import { CartItem } from "./cart-item";
 
 export class Purchase {
 
-  customer: Customer = new Customer("","","");
-  shippingAddress = new Address();
-  billingAddress = new Address();
-  order: Order = new Order(0,0);
-  orderItems: OrderItem[] = [];
-
+  user: User = new User("", "", "", "", "", "");
+  order: Order = new Order(0, new Address(), new Address(), "", "", "", "");
+  orderItems: CartItem[] = [];
 }
