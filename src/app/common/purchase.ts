@@ -1,11 +1,16 @@
-import { Address } from "./address";
 import { User } from "./user";
 import { Order } from "./order";
-import { CartItem } from "./cart-item";
+import { OrderItem } from "./order-item";
 
 export class Purchase {
 
-  user: User = new User("", "", "", "", "", "");
-  order: Order = new Order(0, new Address(), new Address(), "", "", "", "");
-  orderItems: CartItem[] = [];
+  user: User;
+  order: Order;
+  orderItems: OrderItem[];
+
+  constructor(user: User, order: Order, orderItems: OrderItem[]) {
+    this.user = user;
+    this.order = order;
+    this.orderItems = orderItems;
+  }
 }
