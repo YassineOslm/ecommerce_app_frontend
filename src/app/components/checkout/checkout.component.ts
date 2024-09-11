@@ -228,29 +228,67 @@ export class CheckoutComponent implements OnInit {
       orderBuilded.deliveryStatus
     );
 
-    const orderItems: OrderItem[] = this.buildOrderItems(
-      this.cartService.cartItems
-    );
+    const orderItems: OrderItem[] = this.buildOrderItems(this.cartService.cartItems);
 
     const purchase: Purchase = new Purchase(user, order, orderItems);
 
-    console.log('purchase');
-    console.log(purchase);
+    console.log('purchase', purchase);
 
+    // Appeler placeOrder et gérer le téléchargement du PDF
     this.checkoutService.placeOrder(purchase).subscribe({
       next: (response) => {
-        console.log(response);
+        console.log('Response:', response);
 
-        // reset cart
-        // this.resetCart();
+        const pdfBlob = response.body;
+
+        // Vérifier que le PDF n'est pas nul
+        if (pdfBlob) {
+          // Récupérer le nom du fichier à partir de l'en-tête Content-Disposition
+          const contentDisposition = response.headers.get(
+            'Content-Disposition'
+          );
+          let fileName = 'receipt.pdf'; // Nom par défaut
+
+          console.log(contentDisposition)
+
+          // Si l'en-tête Content-Disposition contient un nom de fichier
+          if (contentDisposition) {
+            const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
+
+            // Vérifier que fileNameMatch n'est pas nul et a plus d'un élément
+            if (fileNameMatch && fileNameMatch.length > 1) {
+              fileName = fileNameMatch[1];
+            }
+          }
+
+          // Créer un lien de téléchargement pour le PDF
+          const downloadURL = URL.createObjectURL(
+            new Blob([pdfBlob], { type: 'application/pdf' })
+          );
+          const link = document.createElement('a');
+          link.href = downloadURL;
+          link.download = fileName;
+          link.click();
+
+          // Révoquer l'URL après le téléchargement pour libérer les ressources
+          URL.revokeObjectURL(downloadURL);
+
+          // Réinitialiser le panier après le téléchargement (optionnel)
+          this.resetCart(fileName);
+        } else {
+          console.error('PDF Blob is null');
+        }
       },
       error: (err) => {
-        console.log('There were an error:', err.message);
-      },
+        console.log('There was an error:', err.message);
+      }
     });
-  }
+}
 
-  resetCart() {
+
+
+
+  resetCart(orderId: string) {
     // reset cart data
     this.cartService.cartItems = [];
     this.cartService.totalPrice.next(0);
@@ -259,9 +297,10 @@ export class CheckoutComponent implements OnInit {
     // reset the form
     this.checkoutFormGroup.reset();
 
-    // navigate back to the products page
-    this.router.navigateByUrl('/products');
+    // Navigate to the success page with the orderId
+    this.router.navigateByUrl(`/success/${orderId}`);
   }
+
 
   buildOrderItems(cartItems: CartItem[]): OrderItem[] {
     let orderItems: OrderItem[] = [];
