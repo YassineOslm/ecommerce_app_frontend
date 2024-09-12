@@ -12,16 +12,6 @@ export class ProductService {
 
   constructor(private httpClient: HttpClient) { }
 
-  /* getProductListPaginate(thePage: number,
-                        thePageSize: number,
-                        theCategoryId: number) : Observable<GetResponseProducts> {
-
-    //need to build URL based on the category id, page and size
-    const searchUrl = `${this.baseUrl}/searchByCatId?id=${theCategoryId}`
-                      + `&page=${thePage}&size=${thePageSize}`;
-    return this.httpClient.get<GetResponseProducts>(searchUrl);
-  } */
-
   getProductListPaginate(thePage: number,
     thePageSize: number,
     filterBy: string,
@@ -35,7 +25,10 @@ export class ProductService {
     return this.httpClient.get<GetResponseProducts>(searchUrl);
   }
 
-
+  getProductListPaginated(thePageNumber: number, thePageSize: number): Observable<GetResponseProducts> {
+    const url = `${this.baseUrl}/listPaginated?page=${thePageNumber}&size=${thePageSize}`;
+    return this.httpClient.get<GetResponseProducts>(url);
+  }
 
   searchProductsPaginate(thePage: number,
     thePageSize: number,

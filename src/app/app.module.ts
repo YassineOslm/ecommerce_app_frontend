@@ -16,20 +16,32 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommentListComponent } from './components/comment-list/comment-list.component';
 import { AddNewCommentComponent } from './components/add-new-comment/add-new-comment.component';
 import { SuccessComponent } from './components/success/success.component';
+import { AuthModule } from '@auth0/auth0-angular';
+import { AuthButtonComponent } from './components/auth-button/auth-button.component';
+import { AuthGuard } from '@auth0/auth0-angular';
+import { UserInfoButtonComponent } from './components/user-info-button/user-info-button.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import { AdminProductListComponent } from './components/admin-product-list/admin-product-list.component';
+import { AddNewProductComponent } from './components/add-new-product/add-new-product.component';
+import { EditProductComponent } from './components/edit-product/edit-product.component'; // Import du nouveau composant AdminPanelComponent
 
 const routes: Routes = [
-  {path: 'checkout', component: CheckoutComponent},
-  {path: 'cart-details', component: CartDetailsComponent},
-  {path: 'products/:id', component: ProductDetailsComponent},
-  {path: 'success/:id', component: SuccessComponent},
-  {path: 'products/:id/comments', component: CommentListComponent},
-  {path: 'products/:id/add-new-comment', component: AddNewCommentComponent},
-  {path: 'search/:keyword', component: ProductListComponent},
-  {path: 'category/:id', component: ProductListComponent},
-  {path: 'category', component: ProductListComponent},
-  {path: 'products', component: ProductListComponent},
-  {path: '', redirectTo: '/products', pathMatch: 'full'},
-  {path: '**', redirectTo: '/products', pathMatch: 'full'}
+  { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },
+  { path: 'cart-details', component: CartDetailsComponent, canActivate: [AuthGuard] },
+  { path: 'admin', component: AdminPanelComponent },
+  { path: 'admin/products', component: AdminProductListComponent },
+  { path: 'admin/add-new-product', component: AddNewProductComponent},
+  { path: 'admin/edit-product/:id', component: EditProductComponent},
+  { path: 'products/:id', component: ProductDetailsComponent },
+  { path: 'success/:id', component: SuccessComponent },
+  { path: 'products/:id/comments', component: CommentListComponent },
+  { path: 'products/:id/add-new-comment', component: AddNewCommentComponent, canActivate: [AuthGuard] },
+  { path: 'search/:keyword', component: ProductListComponent },
+  { path: 'category/:id', component: ProductListComponent },
+  { path: 'category', component: ProductListComponent },
+  { path: 'products', component: ProductListComponent },
+  { path: '', redirectTo: '/products', pathMatch: 'full' },
+  { path: '**', redirectTo: '/products', pathMatch: 'full' }
 ];
 
 @NgModule({
@@ -44,14 +56,26 @@ const routes: Routes = [
     CheckoutComponent,
     CommentListComponent,
     AddNewCommentComponent,
-    SuccessComponent
+    SuccessComponent,
+    UserInfoButtonComponent,
+    AdminPanelComponent,
+    AdminProductListComponent,
+    AddNewProductComponent // Déclaration du nouveau composant AdminPanelComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
     BrowserModule,
     HttpClientModule,
     NgbModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AuthModule.forRoot({
+      domain: 'dev-itepivn30bc81pjc.us.auth0.com',
+      clientId: 'foFNGGJ2PUM4SHVglsog76eGPm0CwT4N',
+      authorizationParams: {
+        redirect_uri: window.location.origin
+      }
+    }),
+    AuthButtonComponent // Import du bouton d'authentification
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]

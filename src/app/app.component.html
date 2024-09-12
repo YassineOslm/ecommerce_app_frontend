@@ -1,6 +1,6 @@
 <div class="page-wrapper">
   <!-- MENU SIDEBAR-->
-  <aside class="menu-sidebar d-none d-lg-block">
+  <aside class="menu-sidebar d-none d-lg-block" *ngIf="!isAdmin">
     <div class="logo">
       <a routerLink="/products">
         <img
@@ -13,14 +13,18 @@
     <app-product-category-menu></app-product-category-menu>
   </aside>
   <!-- END MENU SIDEBAR-->
+
   <div class="page-container">
     <!-- HEADER DESKTOP-->
     <header class="header-desktop">
       <div class="section-content section-content-p30">
         <div class="container-fluid">
           <div class="header-wrap">
-            <app-search></app-search>
-            <app-cart-status></app-cart-status>
+            <!-- Supprimer ces composants uniquement si l'utilisateur est un admin -->
+            <app-search *ngIf="!isAdmin"></app-search>
+            <app-auth-button></app-auth-button>
+            <app-cart-status *ngIf="!isAdmin"></app-cart-status>
+            <app-user-info-button (isAdminEvent)="handleIsAdminEvent($event)"></app-user-info-button>
           </div>
           <div class="account-wrap"></div>
         </div>
@@ -30,16 +34,12 @@
 
     <!-- MAIN CONTENT-->
     <router-outlet></router-outlet>
-
-
-
-
   </div>
 </div>
 
 <!-- END PAGE CONTAINER-->
 
-<footer>
+<footer *ngIf="!isAdmin">
   <ul>
     <li><a href="#">About Us</a></li>
     <li><a href="#">Contact Us</a></li>

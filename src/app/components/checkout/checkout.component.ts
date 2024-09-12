@@ -338,9 +338,9 @@ export class CheckoutComponent implements OnInit {
       totalPrice: this.totalPrice.toFixed(2).toString(),
       totalQuantity: this.totalQuantity.toString(),
       paymentMethod: this.creditCardType?.value,
-      paymentStatus: 'Pending',
+      paymentStatus: 'Accepted',
       deliveryMethod: deliveryMethod,
-      deliveryStatus: 'Pending',
+      deliveryStatus: 'Delivered',
       shippingAddress: this.getShippingAddress(),
       billingAddress: this.getBillingAddress()
     };

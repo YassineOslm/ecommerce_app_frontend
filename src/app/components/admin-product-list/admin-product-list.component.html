@@ -1,0 +1,42 @@
+<div class="main-content">
+  <div style="display: flex; justify-content: space-between;">
+    <button class="au-btn-submit" routerLink="/admin">Go Back</button>
+    <button class="au-btn-submit" routerLink="/admin/add-new-product">Add New Product</button>
+  </div>
+  <section class="product-list">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Product ID</th>
+          <th>Product Name</th>
+          <th>Price</th>
+          <th>Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td>{{ product.id }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.unitPrice | currency }}</td>
+          <td>{{ product.unitsInStock }}</td>
+          <td>
+            <button type="button" class="btn btn-primary" routerLink="/admin/edit-product/{{ product.id }}">Edit</button>
+            <button type="button" class="btn btn-danger">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div style="display: flex; justify-content: center; align-items: center">
+    <ngb-pagination
+      [(page)]="thePageNumber"
+      [pageSize]="thePageSize"
+      [collectionSize]="theTotalElements"
+      [maxSize]="5"
+      [boundaryLinks]="true"
+      (pageChange)="loadProducts()"
+    >
+    </ngb-pagination>
+  </div>
+</div>
