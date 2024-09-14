@@ -25,7 +25,10 @@ import { AdminProductListComponent } from './components/admin-product-list/admin
 import { AddNewProductComponent } from './components/add-new-product/add-new-product.component';
 import { EditProductComponent } from './components/edit-product/edit-product.component';
 import { AdminCommentListComponent } from './components/admin-comment-list/admin-comment-list.component';
-import { EditCommentComponent } from './components/edit-comment/edit-comment.component'; // Import du nouveau composant AdminPanelComponent
+import { EditCommentComponent } from './components/edit-comment/edit-comment.component';
+import { AdminCategoryListComponent } from './components/admin-category-list/admin-category-list.component';
+import { EditCategoryComponent } from './components/edit-category/edit-category.component';
+import { AddNewCategoryComponent } from './components/add-new-category/add-new-category.component';
 
 const routes: Routes = [
   { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },
@@ -33,8 +36,11 @@ const routes: Routes = [
   { path: 'admin', component: AdminPanelComponent },
   { path: 'admin/products', component: AdminProductListComponent },
   { path: 'admin/comments', component: AdminCommentListComponent },
+  { path: 'admin/categories', component: AdminCategoryListComponent },
+  { path: 'admin/edit-category/:id', component: EditCategoryComponent},
   { path: 'admin/edit-comment/:id', component: EditCommentComponent},
   { path: 'admin/add-new-product', component: AddNewProductComponent},
+  { path: 'admin/add-new-category', component: AddNewCategoryComponent},
   { path: 'admin/edit-product/:id', component: EditProductComponent},
   { path: 'products/:id', component: ProductDetailsComponent },
   { path: 'success/:id', component: SuccessComponent },
@@ -67,7 +73,10 @@ const routes: Routes = [
     AddNewProductComponent,
     EditProductComponent,
     AdminCommentListComponent,
-    EditCommentComponent
+    EditCommentComponent,
+    AdminCategoryListComponent,
+    EditCategoryComponent,
+    AddNewCategoryComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -83,7 +92,7 @@ const routes: Routes = [
         redirect_uri: window.location.origin
       }
     }),
-    AuthButtonComponent // Import du bouton d'authentification
+    AuthButtonComponent
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]

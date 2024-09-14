@@ -3,6 +3,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Auth0ManagementService } from 'src/app/services/auth0-management.service';
 import { Router } from '@angular/router';
+import { User } from 'src/app/common/user';
 
 @Component({
   selector: 'app-user-info-button',
@@ -48,10 +49,26 @@ export class UserInfoButtonComponent implements OnInit {
         this.http.get(url, { headers }).subscribe(
           (roles: any) => {
             this.userRoles = roles;
-            this.redirectBasedOnRole();
+
+            const payload = {
+              firstname: this.userInfo.nickname,
+              lastname: this.userInfo.nickname,
+              email: this.userInfo.email,
+              role: roles[0].name
+            };
+
+            this.authManagementService.sendUserToBackend(payload).subscribe(
+              (response: any) => {
+                console.log('Utilisateur créé ou existant:', response);
+                this.redirectBasedOnRole();
+              },
+              (error: any) => {
+                console.log('Erreur lors de l\'envoi du payload au backend:', error);
+              }
+            );
           },
           (error: any) => {
-            console.error('Erreur lors de la récupération des rôles:', error);
+            console.log('Erreur lors de la récupération des rôles:', error);
           }
         );
       },
@@ -60,6 +77,7 @@ export class UserInfoButtonComponent implements OnInit {
       }
     );
   }
+
 
   redirectBasedOnRole() {
     const isAdmin = this.userRoles.some((role: any) => role.name === 'admin');

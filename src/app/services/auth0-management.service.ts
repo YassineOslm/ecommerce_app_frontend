@@ -14,6 +14,8 @@ export class Auth0ManagementService {
 
   constructor(private http: HttpClient) {}
 
+  private backendUrl = 'http://localhost:8080/api/users/create';
+
   // Obtenir le token d'accès Management API
   getManagementApiToken(): Observable<any> {
     const body = {
@@ -24,5 +26,9 @@ export class Auth0ManagementService {
     };
 
     return this.http.post(this.tokenUrl, body);  // Faire la requête pour obtenir le token
+  }
+
+  sendUserToBackend(payload: any): Observable<any> {
+    return this.http.post(this.backendUrl, payload);
   }
 }

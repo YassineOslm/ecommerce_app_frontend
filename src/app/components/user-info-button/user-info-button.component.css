@@ -1,4 +1,5 @@
 .au-btn-submit{
+  display: none;
   position:relative;
   right:0;
   min-width:95px;

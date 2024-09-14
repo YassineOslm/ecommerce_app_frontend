@@ -79,8 +79,6 @@ export class AddNewProductComponent implements OnInit {
       ]
     };
 
-    console.log(newProductDto);
-
     this.productService.addProduct(newProductDto).subscribe(
       (response: any) => {
         this.newProductId = response.newProductId;

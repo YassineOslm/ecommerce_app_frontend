@@ -1,0 +1,33 @@
+<div class="main-content">
+  <div style="display: flex; justify-content: space-between;">
+    <button class="au-btn-submit" routerLink="/admin">Go Back</button>
+    <button class="au-btn-submit" routerLink="/admin/add-new-category">Add New Category</button>
+  </div>
+
+  <!-- Liste des catégories -->
+  <section class="category-list" *ngIf="categories.length > 0">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Category ID</th>
+          <th>Category Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of categories">
+          <td>{{ category.id }}</td>
+          <td>{{ category.categoryName }}</td>
+          <td>
+            <button type="button" class="btn btn-primary" routerLink="/admin/edit-category/{{ category.id }}">Edit</button>
+            <button type="button" class="btn btn-danger" (click)="deleteCategory(category.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div *ngIf="categories.length === 0">
+    <p>No categories found.</p>
+  </div>
+</div>
