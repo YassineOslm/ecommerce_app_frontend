@@ -12,7 +12,7 @@ export class ProductService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getProductListPaginate(thePage: number,
+  getProductListPaginateByCategory(thePage: number,
     thePageSize: number,
     filterBy: string,
     ascending: boolean,
@@ -43,13 +43,48 @@ export class ProductService {
     return this.httpClient.get<GetResponseProducts>(searchUrl);
   }
 
+  getAllProducts(): Observable<Product[]> {
+    const url = `${this.baseUrl}/all`; // Endpoint pour tous les produits
+    return this.httpClient.get<Product[]>(url);
+  }
 
   getProduct(theProductId: number): Observable<Product> {
     //need to build the URL based on the product id
     const productUrl = `${this.baseUrl}/${theProductId}`;
     return this.httpClient.get<Product>(productUrl);
   }
+
+  updateProduct(productId: number, updatedProduct: Product): Observable<Product> {
+    const updateUrl = `${this.baseUrl}/${productId}`;
+    return this.httpClient.put<Product>(updateUrl, updatedProduct);
+  }
+
+  addProduct(productDto: ProductDto): Observable<{ newProductId: number }> {
+    return this.httpClient.post<{ newProductId: number }>(`${this.baseUrl}`, productDto);
+  }
+
+  deleteProduct(productId: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.baseUrl}/${productId}`);
+  }
+
+
 }
+
+export interface ProductDto {
+  name: string;
+  productDescription: string;
+  unitPrice: number;
+  unitsInStock: number;
+  categoryId: number;
+  categoryName: string;
+  images: ImageDto[];
+}
+
+export interface ImageDto {
+  imageUrl: string;
+  rankShow: number;
+}
+
 
 interface GetResponseProducts {
   content: Product[],

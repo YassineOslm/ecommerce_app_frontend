@@ -117,7 +117,7 @@ export class ProductListComponent implements OnInit {
     console.log("sortOrder:", filterValues.sortOrder); */
 
     this.productService
-      .getProductListPaginate(
+      .getProductListPaginateByCategory(
         this.thePageNumber - 1,
         this.thePageSize,
         filterValues.filterBy,

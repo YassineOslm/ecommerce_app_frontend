@@ -1,0 +1,54 @@
+<div class="main-content">
+  <div style="display: flex; justify-content: space-between;">
+    <button class="au-btn-submit" routerLink="/admin">Go Back</button>
+  </div>
+
+  <!-- Dropdown for selecting a product -->
+  <h3>Select Product</h3>
+  <div class="input-space">
+    <select [(ngModel)]="selectedProductId" (change)="loadComments()">
+      <option value="" disabled>Select product</option>
+      <option *ngFor="let product of products" [value]="product.id">{{ product.name }}</option>
+    </select>
+  </div>
+
+  <!-- List of comments for the selected product -->
+  <section class="comment-list">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Comment ID</th>
+          <th>Comment</th>
+          <th>Rating</th>
+          <th>Date Created</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let comment of comments">
+          <td>{{ comment.id }}</td>
+          <td>{{ comment.comment }}</td>
+          <td>{{ comment.grade }}</td>
+          <td>{{ comment.dateCreated | date }}</td>
+          <td>
+            <button type="button" class="btn btn-primary" routerLink="/admin/edit-comment/{{ comment.id }}">Edit</button>
+            <button type="button" class="btn btn-danger" (click)="deleteComment(+comment.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Comment pagination -->
+  <div *ngIf="comments.length > 0" style="display: flex; justify-content: center; align-items: center">
+    <ngb-pagination
+      [(page)]="commentPageNumber"
+      [pageSize]="commentPageSize"
+      [collectionSize]="totalCommentsElements"
+      [maxSize]="5"
+      [boundaryLinks]="true"
+      (pageChange)="onCommentPageChange($event)"
+    >
+    </ngb-pagination>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="main-content" style="display: flex; justify-content: center;">
+  <button class="au-btn-submit" (click)="goBack()" style="margin-bottom: 40px;">Go Back</button>
+
+  <div *ngIf="commentUpdated" style="max-width: 600px;">
+    <div class="alert alert-success col-md-12" role="alert">
+      Comment updated successfully.
+    </div>
+  </div>
+
+  <form *ngIf="!commentUpdated" [formGroup]="commentForm" (ngSubmit)="onSubmit()" style="width: 100%; max-width: 600px;">
+
+    <!-- Rating Selection -->
+    <div class="form-row">
+      <label class="title">Select Your Grade:</label>
+      <fieldset class="rating">
+        <input type="radio" id="star5" name="rating" value="5" (change)="onRatingChanged($event)" [checked]="commentForm.get('rating')?.value === '5'"/><label class="full" for="star5" title="5 stars"></label>
+        <input type="radio" id="star4half" name="rating" value="4.5" (change)="onRatingChanged($event)" [checked]="commentForm.get('rating')?.value === '4.5'"/><label class="half" for="star4half" title="4.5 stars"></label>
+        <input type="radio" id="star4" name="rating" value="4" (change)="onRatingChanged($event)" [checked]="commentForm.get('rating')?.value === '4'"/><label class="full" for="star4" title="4 stars"></label>
+        <input type="radio" id="star3half" name="rating" value="3.5" (change)="onRatingChanged($event)" [checked]="commentForm.get('rating')?.value === '3.5'"/><label class="half" for="star3half" title="3.5 stars"></label>
+        <input type="radio" id="star3" name="rating" value="3" (change)="onRatingChanged($event)" [checked]="commentForm.get('rating')?.value === '3'"/><label class="full" for="star3" title="3 stars"></label>
+        <input type="radio" id="star2half" name="rating" value="2.5" (change)="onRatingChanged($event)" [checked]="commentForm.get('rating')?.value === '2.5'"/><label class="half" for="star2half" title="2.5 stars"></label>
+        <input type="radio" id="star2" name="rating" value="2" (change)="onRatingChanged($event)" [checked]="commentForm.get('rating')?.value === '2'"/><label class="full" for="star2" title="2 stars"></label>
+        <input type="radio" id="star1half" name="rating" value="1.5" (change)="onRatingChanged($event)" [checked]="commentForm.get('rating')?.value === '1.5'"/><label class="half" for="star1half" title="1.5 stars"></label>
+        <input type="radio" id="star1" name="rating" value="1" (change)="onRatingChanged($event)" [checked]="commentForm.get('rating')?.value === '1'"/><label class="full" for="star1" title="1 stars"></label>
+        <input type="radio" id="starhalf" name="rating" value="0.5" (change)="onRatingChanged($event)" [checked]="commentForm.get('rating')?.value === '0.5'"/><label class="half" for="starhalf" title="0.5 stars"></label>
+      </fieldset>
+      <span>{{ commentForm.get('rating')?.value }}</span>
+    </div>
+
+    <!-- Comment Text -->
+    <div class="form-row">
+      <label for="commentText" class="title">Your comment :</label>
+    </div>
+    <div class="form-row">
+      <textarea class="form-control" id="commentText" formControlName="commentText" rows="3" style="max-height: 150px;" placeholder="Enter your comment here"></textarea>
+    </div>
+
+    <!-- Validation Error Messages -->
+    <div *ngIf="commentText?.invalid && (commentText?.dirty || commentText?.touched)" class="alert alert-danger mt-1">
+      <div *ngIf="commentText?.errors?.['required'] || commentText?.errors?.['notOnlyWhiteSpace']">
+        Comment is required
+      </div>
+      <div *ngIf="commentText?.errors?.['minlength']">
+        Comment must be at least 2 characters long
+      </div>
+      <div *ngIf="commentText?.errors?.['maxlength']">
+        Comment must be maximum 300 characters long
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-row">
+      <button type="submit" class="btn btn-primary" [disabled]="isFormInvalid()">Update Comment</button>
+    </div>
+  </form>
+</div>

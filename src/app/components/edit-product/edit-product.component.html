@@ -1,4 +1,106 @@
-<div class="main-content">
-  <button class="au-btn-submit" routerLink="/admin/products">Go Back</button>
-  <p>edit-product works!</p>
+<div class="main-content page-m">
+  <button class="au-btn-submit" (click)="goBack()" style="margin-bottom: 40px;">Go Back</button>
+  <div
+          *ngIf="isUpdated"
+          class="alert alert-success col-md-12"
+          role="alert"
+        >
+          Product was updated.
+        </div>
+  <div *ngIf="!isUpdated" class="section-content section-content-p30">
+    <div class="container-fluid">
+      <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+
+
+        <!-- Product Information -->
+        <div class="form-area">
+          <h3>Edit Product</h3>
+
+          <!-- Name -->
+          <div class="row">
+            <div class="col-md-2"><label for="name">Product Name</label></div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input id="name" formControlName="name" type="text" class="form-control" placeholder="Enter product name">
+                <div *ngIf="productForm.get('name')?.invalid && (productForm.get('name')?.dirty || productForm.get('name')?.touched)" class="alert alert-danger">
+                  <div *ngIf="productForm.get('name')?.errors?.['required']">Product name is required</div>
+                  <div *ngIf="productForm.get('name')?.errors?.['minlength']">Product name must be at least 2 characters long</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="row">
+            <div class="col-md-2"><label for="productDescription">Description</label></div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <textarea style="max-height: 100px;" id="productDescription" formControlName="productDescription" class="form-control" placeholder="Enter product description"></textarea>
+                <div *ngIf="productForm.get('productDescription')?.invalid && (productForm.get('productDescription')?.dirty || productForm.get('productDescription')?.touched)" class="alert alert-danger">
+                  <div *ngIf="productForm.get('productDescription')?.errors?.['required']">Description is required</div>
+                  <div *ngIf="productForm.get('productDescription')?.errors?.['minlength']">Description must be at least 10 characters long</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Price -->
+          <div class="row">
+            <div class="col-md-2"><label for="unitPrice">Unit Price</label></div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input id="unitPrice" formControlName="unitPrice" type="number" class="form-control" placeholder="Enter unit price">
+                <div *ngIf="productForm.get('unitPrice')?.invalid && (productForm.get('unitPrice')?.dirty || productForm.get('unitPrice')?.touched)" class="alert alert-danger">
+                  <div *ngIf="productForm.get('unitPrice')?.errors?.['required']">Unit price is required</div>
+                  <div *ngIf="productForm.get('unitPrice')?.errors?.['min']">Price must be a positive value</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Units in Stock -->
+          <div class="row">
+            <div class="col-md-2"><label for="unitsInStock">Units in Stock</label></div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input id="unitsInStock" formControlName="unitsInStock" type="number" class="form-control" placeholder="Enter number of units in stock">
+                <div *ngIf="productForm.get('unitsInStock')?.invalid && (productForm.get('unitsInStock')?.dirty || productForm.get('unitsInStock')?.touched)" class="alert alert-danger">
+                  <div *ngIf="productForm.get('unitsInStock')?.errors?.['required']">Units in stock is required</div>
+                  <div *ngIf="productForm.get('unitsInStock')?.errors?.['min']">Must be at least 0</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Date Created (Disabled) -->
+          <div class="row">
+            <div class="col-md-2"><label for="dateCreated">Date Created</label></div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input id="dateCreated" formControlName="dateCreated" type="text" class="form-control" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Last Updated (Disabled) -->
+          <div class="row">
+            <div class="col-md-2"><label for="lastUpdated">Last Updated</label></div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input id="lastUpdated" formControlName="lastUpdated" type="text" class="form-control" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
 </div>

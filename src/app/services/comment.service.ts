@@ -60,6 +60,26 @@ export class CommentService {
     return this.httpClient.get<{ [productId: number]: number }>(url);
   }
 
+  deleteComment(commentId: number): Observable<void> {
+    const url = `${this.baseUrl}/comments/${commentId}`;
+    return this.httpClient.delete<void>(url);
+  }
+
+
+  getComment(commentId: number): Observable<Comment> {
+    const url = `${this.baseUrl}/comments/${commentId}`;
+    return this.httpClient.get<Comment>(url);
+  }
+
+
+  updateComment(updatedComment: Comment): Observable<any> {
+    const url = `${this.baseUrl}/comments/${updatedComment.id}`;
+    console.log('updatedComment');
+    console.log(updatedComment);
+    return this.httpClient.put(url, updatedComment);
+  }
+
+
 }
 
 interface GetResponseComments {

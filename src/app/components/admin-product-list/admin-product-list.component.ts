@@ -35,4 +35,18 @@ export class AdminProductListComponent implements OnInit {
     };
   }
 
+  deleteProduct(productId: string) {
+    if (confirm('Are you sure you want to delete this product?')) {
+      this.productService.deleteProduct(+productId).subscribe(
+        () => {
+          alert(`Product with ID ${productId} deleted successfully.`);
+          this.loadProducts();
+        },
+        error => {
+          console.log('Error deleting product:', error);
+        }
+      );
+    }
+  }
+
 }
