@@ -24,6 +24,7 @@
             <app-search *ngIf="!isAdmin"></app-search>
             <app-auth-button (isAdminEvent)="handleIsAdminEvent($event)"></app-auth-button>
             <app-cart-status *ngIf="!isAdmin"></app-cart-status>
+            <app-user-info-button></app-user-info-button>
           </div>
           <div class="account-wrap"></div>
         </div>

@@ -1,3 +1,16 @@
-<button class="au-btn-submit">
-  User Info
-</button>
+
+<div class="action">
+  <button class="profile" (click)="menuToggle()">
+    User Info
+  </button>
+  <div class="menu" [class.active]="menuActive">
+    <ul>
+      <li>
+        <a href="#">View my profile</a>
+      </li>
+      <li>
+        <a href="#">Edit my profile</a>
+      </li>
+    </ul>
+  </div>
+</div>
