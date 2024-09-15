@@ -1,4 +1,3 @@
-
 <div class="action">
   <button class="profile" (click)="menuToggle()">
     User Info
@@ -6,10 +5,10 @@
   <div class="menu" [class.active]="menuActive">
     <ul>
       <li>
-        <a href="#">View my profile</a>
+        <a routerLink="/user-info">View my profile</a>
       </li>
       <li>
-        <a href="#">Edit my profile</a>
+        <a routerLink="/edit-user-info">Edit my profile</a>
       </li>
     </ul>
   </div>

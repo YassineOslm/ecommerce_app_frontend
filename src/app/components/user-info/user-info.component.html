@@ -1,0 +1,37 @@
+<div class="main-content">
+  <button class="au-btn-submit" routerLink="/products">Go to products</button>
+
+  <div class="user-info-container">
+    <h2>User Information</h2>
+
+    <div *ngIf="userInfo; else noUser">
+      <p><strong>Username:</strong> {{ userInfo.nickname }}</p>
+      <p><strong>Email:</strong> {{ userInfo.email }}</p>
+    </div>
+
+    <ng-template #noUser>
+      <p>No user connected</p>
+    </ng-template>
+
+    <div *ngIf="userRoles && userRoles.length > 0; else noRole">
+      <p><strong>Role:</strong> {{ userRoles[0].name }}</p>
+    </div>
+
+    <ng-template #noRole>
+      <p>No role assigned</p>
+    </ng-template>
+
+    <div class="user-addresses">
+      <h3>Addresses</h3>
+      <ul *ngIf="userAddresses.length > 0; else noAddress">
+        <li *ngFor="let address of userAddresses">
+          {{ address.street }}, {{ address.city }}, {{ address.postalCode }}, {{ address.country }}
+        </li>
+      </ul>
+
+      <ng-template #noAddress>
+        <p>No addresses registered</p>
+      </ng-template>
+    </div>
+  </div>
+</div>

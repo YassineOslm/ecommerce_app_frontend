@@ -8,18 +8,22 @@ import { UserAddress } from '../common/user-address';
 })
 export class UserService {
 
-  private backendUrl = 'http://localhost:8080/api/users/email/';  // Backend URL to fetch user by email
-
+  private backendUrl = 'http://localhost:8080/api/users/email/';
   private baseUrl = 'http://localhost:8080/api/users';
 
   constructor(private httpClient: HttpClient) {}
 
-  // Fetch user details from the backend using email
   getUserByEmail(email: string): Observable<any> {
     return this.httpClient.get(`${this.backendUrl}${email}`);
   }
+
   getUserAddresses(userId: number): Observable<UserAddress[]> {
     const url = `${this.baseUrl}/${userId}/addresses`;
     return this.httpClient.get<UserAddress[]>(url);
+  }
+
+  addUserAddress(userId: number, address: UserAddress): Observable<UserAddress> {
+    const url = `${this.baseUrl}/${userId}/addAddress`;
+    return this.httpClient.post<UserAddress>(url, address);
   }
 }

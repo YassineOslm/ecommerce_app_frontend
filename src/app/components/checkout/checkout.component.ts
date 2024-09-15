@@ -3,7 +3,6 @@ import {
   FormBuilder,
   FormGroup,
   Validators,
-  FormControl,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CartItem } from 'src/app/common/cart-item';
@@ -12,6 +11,7 @@ import { OrderItem } from 'src/app/common/order-item';
 import { Purchase } from 'src/app/common/purchase';
 import { User } from 'src/app/common/user';
 import { UserAddress } from 'src/app/common/user-address';
+import { Auth0ManagementService } from 'src/app/services/auth0-management.service';
 import { CartService } from 'src/app/services/cart.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
 import { ShopFormService } from 'src/app/services/shop-form.service';
@@ -24,6 +24,8 @@ import { FormValidators } from 'src/app/validators/form-validators'; // Votre fi
   styleUrls: ['./checkout.component.css'],
 })
 export class CheckoutComponent implements OnInit {
+  userInfo: any = null;
+  userForCheckout: User = new User('','','','','','');
   checkoutFormGroup: FormGroup = this.formBuilder.group({});
   savedShippingAddresses: UserAddress[] = [];
   savedBillingAddresses: UserAddress[] = [];
@@ -47,10 +49,16 @@ export class CheckoutComponent implements OnInit {
     private shopFormService: ShopFormService,
     private userService: UserService,
     private formBuilder: FormBuilder,
+    private authManagementService: Auth0ManagementService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.authManagementService.userInfo$.subscribe(
+      (user) => {
+        this.userInfo = user;
+      }
+    );
     this.reviewCartDetail();
     this.loadUserAddresses(this.getUserInfo().idUser);
 
@@ -161,21 +169,30 @@ export class CheckoutComponent implements OnInit {
   }
 
   loadUserAddresses(userId: number) {
-    this.userService.getUserAddresses(userId).subscribe(
-      (data: UserAddress[]) => {
-        data.forEach((address) => {
-          if (address.addressType === 'SHIPPING') {
-            this.savedShippingAddresses.push(address);
-          } else if (address.addressType === 'BILLING') {
-            this.savedBillingAddresses.push(address);
-          } else if (address.addressType === 'BOTH') {
-            this.savedShippingAddresses.push(address);
-            this.savedBillingAddresses.push(address);
+
+    this.userService.getUserByEmail(this.userInfo.email).subscribe(
+      (response: any) => {
+        this.userForCheckout = response;
+        this.userService.getUserAddresses(response.id).subscribe(
+          (data: UserAddress[]) => {
+            data.forEach((address) => {
+              if (address.addressType === 'SHIPPING') {
+                this.savedShippingAddresses.push(address);
+              } else if (address.addressType === 'BILLING') {
+                this.savedBillingAddresses.push(address);
+              } else if (address.addressType === 'BOTH') {
+                this.savedShippingAddresses.push(address);
+                this.savedBillingAddresses.push(address);
+              }
+            });
+          },
+          (error: any) => {
+            console.log('Error fetching user addresses', error)
           }
-        });
+        );
       },
-      (error) => {
-        console.error('Error fetching user addresses:', error);
+      (error: any) => {
+        console.log('Error fetching user info', error)
       }
     );
   }
@@ -209,12 +226,12 @@ export class CheckoutComponent implements OnInit {
     }
 
     const user: User = new User(
-      '1',
-      'afasa',
-      'afasa',
-      'afasa@test.com',
-      'M',
-      '+32489012345'
+      this.userForCheckout.id,
+      this.userForCheckout.firstname,
+      this.userForCheckout.lastname,
+      this.userForCheckout.email,
+      this.userForCheckout.gender || 'M',
+      this.userForCheckout.phoneNumber || '+32489012345'
     );
 
     const orderBuilded = this.buildOrder();

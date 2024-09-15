@@ -29,6 +29,8 @@ import { EditCommentComponent } from './components/edit-comment/edit-comment.com
 import { AdminCategoryListComponent } from './components/admin-category-list/admin-category-list.component';
 import { EditCategoryComponent } from './components/edit-category/edit-category.component';
 import { AddNewCategoryComponent } from './components/add-new-category/add-new-category.component';
+import { UserInfoComponent } from './components/user-info/user-info.component';
+import { EditUserInfoComponent } from './components/edit-user-info/edit-user-info.component';
 
 const routes: Routes = [
   { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },
@@ -50,6 +52,8 @@ const routes: Routes = [
   { path: 'category/:id', component: ProductListComponent },
   { path: 'category', component: ProductListComponent },
   { path: 'products', component: ProductListComponent },
+  { path: 'user-info', component: UserInfoComponent },
+  { path: 'edit-user-info', component: EditUserInfoComponent },
   { path: '', redirectTo: '/products', pathMatch: 'full' },
   { path: '**', redirectTo: '/products', pathMatch: 'full' }
 ];
@@ -76,7 +80,9 @@ const routes: Routes = [
     EditCommentComponent,
     AdminCategoryListComponent,
     EditCategoryComponent,
-    AddNewCategoryComponent
+    AddNewCategoryComponent,
+    UserInfoComponent,
+    EditUserInfoComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

@@ -1,0 +1,45 @@
+.user-info-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+h2 {
+  font-size: 24px;
+  color: #333;
+}
+
+p {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.5;
+}
+
+strong {
+  color: #333;
+}
+
+.user-addresses {
+  margin-top: 20px;
+}
+
+.user-addresses h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.user-addresses ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.user-addresses ul li {
+  background-color: #f1f1f1;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+

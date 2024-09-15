@@ -1,0 +1,76 @@
+<div class="main-content page-m">
+  <div class="section-content section-content-p30">
+    <div class="container-fluid">
+      <button class="au-btn-submit" (click)="goBack()">Go to products</button>
+
+      <h2 class="form-title">Edit User Information</h2>
+
+      <!-- Existing Addresses Section -->
+      <div *ngIf="userAddresses.length > 0; else noAddresses" class="form-area">
+        <h3>Your Addresses</h3>
+        <div class="saved-addresses">
+          <div *ngFor="let address of userAddresses" class="address-card">
+            <p>{{ address.number }} {{ address.street }}, {{ address.city }}, {{ address.postalCode }}, {{ address.country }} ({{ address.addressType }})</p>
+            <div class="address-actions">
+              <button class="au-btn au-btn-edit" (click)="editAddress(address)">Edit</button>
+              <button class="au-btn au-btn-delete" (click)="deleteAddress(address.idUserAddress)">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noAddresses>
+        <p>No addresses available.</p>
+      </ng-template>
+
+      <!-- Add/Edit Address Section -->
+      <div class="form-area" style="margin-top: 50px;">
+        <h3>Add/Edit Address</h3>
+        <form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="street">Street:</label>
+            <input id="street" class="form-control" formControlName="street" placeholder="Street" />
+          </div>
+
+          <div class="form-group">
+            <label for="number">Number:</label>
+            <input id="number" class="form-control" formControlName="number" placeholder="House/Apartment Number" />
+          </div>
+
+          <div class="form-group">
+            <label for="box">Box (optional):</label>
+            <input id="box" class="form-control" formControlName="box" placeholder="Box (if applicable)" />
+          </div>
+
+          <div class="form-group">
+            <label for="postalCode">Postal Code:</label>
+            <input id="postalCode" class="form-control" formControlName="postalCode" placeholder="Postal Code" />
+          </div>
+
+          <div class="form-group">
+            <label for="city">City:</label>
+            <input id="city" class="form-control" formControlName="city" placeholder="City" />
+          </div>
+
+          <div class="form-group">
+            <label for="country">Country:</label>
+            <input id="country" class="form-control" formControlName="country" placeholder="Country" />
+          </div>
+
+          <div class="form-group">
+            <label for="addressType">Address Type:</label>
+            <select id="addressType" class="form-control" formControlName="addressType">
+              <option *ngIf="canAddShipping" value="SHIPPING">Shipping</option>
+              <option *ngIf="canAddBilling" value="BILLING">Billing</option>
+              <option value="BOTH">Both</option>
+            </select>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="au-btn-submit">Save Address</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
