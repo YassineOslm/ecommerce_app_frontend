@@ -38,7 +38,7 @@ export class CommentService {
         id: userId,
       },
     };
-    return this.httpClient.post<{ content: string }>(addCommentUrl, commentData);
+    return this.httpClient.post<{ content: Comment }>(addCommentUrl, commentData);
   }
 
   getCommentCount(productId: number): Observable<number> {

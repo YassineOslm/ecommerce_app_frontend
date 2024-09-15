@@ -41,7 +41,12 @@
         </ul>
       </div>
       <div>
-        <button (click)="addToCart()" class="btn btn-primary btn-sm">Add to cart</button>
+        <span *ngIf="product.unitsInStock > 0">
+          <button (click)="addToCart()" class="btn btn-primary btn-sm">Add to cart</button>
+        </span>
+        <span *ngIf="product.unitsInStock == 0">
+          <button class="btn btn-primary btn-sm" disabled>Add to cart</button>
+        </span>
       </div>
     </div>
   </div>

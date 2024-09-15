@@ -15,6 +15,7 @@ import { UserAddress } from 'src/app/common/user-address';
 import { CartService } from 'src/app/services/cart.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
 import { ShopFormService } from 'src/app/services/shop-form.service';
+import { UserService } from 'src/app/services/user-service.service';
 import { FormValidators } from 'src/app/validators/form-validators'; // Votre fichier de validateurs personnalisés
 
 @Component({
@@ -44,6 +45,7 @@ export class CheckoutComponent implements OnInit {
     private cartService: CartService,
     private checkoutService: CheckoutService,
     private shopFormService: ShopFormService,
+    private userService: UserService,
     private formBuilder: FormBuilder,
     private router: Router
   ) {}
@@ -159,7 +161,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   loadUserAddresses(userId: number) {
-    this.checkoutService.getUserAddresses(userId).subscribe(
+    this.userService.getUserAddresses(userId).subscribe(
       (data: UserAddress[]) => {
         data.forEach((address) => {
           if (address.addressType === 'SHIPPING') {

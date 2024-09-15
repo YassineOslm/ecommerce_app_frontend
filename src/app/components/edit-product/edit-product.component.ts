@@ -27,18 +27,16 @@ export class EditProductComponent implements OnInit {
       productDescription: ['', [Validators.required, Validators.minLength(10)]],
       unitPrice: ['', [Validators.required, Validators.min(0)]],
       unitsInStock: ['', [Validators.required, Validators.min(0)]],
-      dateCreated: [{ value: '', disabled: true }], // disabled fields
+      dateCreated: [{ value: '', disabled: true }],
       lastUpdated: [{ value: '', disabled: true }]
     });
   }
 
   ngOnInit(): void {
-    // Extract product ID from the route safely
     const productIdParam = this.route.snapshot.paramMap.get('id');
     if (productIdParam) {
       this.productId = +productIdParam;
 
-      // Fetch product data using the ID and pre-fill the form
       this.productService.getProduct(this.productId).subscribe(
         (data: Product) => {
           this.product = data;
@@ -62,7 +60,6 @@ export class EditProductComponent implements OnInit {
     this.router.navigate(['/admin/products']);
   }
 
-  // Method to handle form submission
   onSubmit() {
     if (this.productForm.invalid) {
       this.productForm.markAllAsTouched();
@@ -74,12 +71,8 @@ export class EditProductComponent implements OnInit {
       ...this.productForm.value
     };
 
-    console.log(updatedProduct);
-
-    // Appeler le service updateProduct pour envoyer la requête au backend
     this.productService.updateProduct(this.productId, updatedProduct).subscribe(
       () => {
-        console.log('Product updated successfully');
         this.isUpdated = true;
       },
       error => {

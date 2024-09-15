@@ -22,9 +22,8 @@
           <div class="header-wrap">
             <!-- Supprimer ces composants uniquement si l'utilisateur est un admin -->
             <app-search *ngIf="!isAdmin"></app-search>
-            <app-auth-button></app-auth-button>
+            <app-auth-button (isAdminEvent)="handleIsAdminEvent($event)"></app-auth-button>
             <app-cart-status *ngIf="!isAdmin"></app-cart-status>
-            <app-user-info-button (isAdminEvent)="handleIsAdminEvent($event)"></app-user-info-button>
           </div>
           <div class="account-wrap"></div>
         </div>
