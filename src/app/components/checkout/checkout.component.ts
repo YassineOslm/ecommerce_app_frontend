@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { CartItem } from 'src/app/common/cart-item';
 import { Order } from 'src/app/common/order';
 import { OrderItem } from 'src/app/common/order-item';
+import { PaymentInfo } from 'src/app/common/payment-info';
 import { Purchase } from 'src/app/common/purchase';
 import { User } from 'src/app/common/user';
 import { UserAddress } from 'src/app/common/user-address';
@@ -17,6 +18,7 @@ import { CheckoutService } from 'src/app/services/checkout.service';
 import { ShopFormService } from 'src/app/services/shop-form.service';
 import { UserService } from 'src/app/services/user-service.service';
 import { FormValidators } from 'src/app/validators/form-validators'; // Votre fichier de validateurs personnalisés
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-checkout',
@@ -43,6 +45,12 @@ export class CheckoutComponent implements OnInit {
   @ViewChild('useNewBillingAddressCheckbox')
   useNewBillingAddressCheckbox!: ElementRef<HTMLInputElement>;
 
+
+  stripe = Stripe(environment.stripePblishableKey);
+  paymentInfo: PaymentInfo = new PaymentInfo();
+  cardElement: any;
+  displayError: any = "";
+
   constructor(
     private cartService: CartService,
     private checkoutService: CheckoutService,
@@ -54,6 +62,9 @@ export class CheckoutComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    this.setupStripePaymentForm();
+
     this.authManagementService.userInfo$.subscribe(
       (user) => {
         this.userInfo = user;
@@ -128,7 +139,8 @@ export class CheckoutComponent implements OnInit {
         ],
       }),
       creditCard: this.formBuilder.group({
-        cardType: ['', Validators.required],
+
+        /* cardType: ['', Validators.required],
         nameOnCard: [
           '',
           [
@@ -146,22 +158,38 @@ export class CheckoutComponent implements OnInit {
           [Validators.required, Validators.pattern('^[0-9]{3}$')],
         ],
         expirationMonth: ['', Validators.required],
-        expirationYear: ['', Validators.required],
+        expirationYear: ['', Validators.required], */
       }),
       deliveryMethod: ['Standard', Validators.required],
     });
 
     // Populate credit card months and years
-    const startMonth: number = new Date().getMonth() + 1;
+    /* const startMonth: number = new Date().getMonth() + 1;
     this.shopFormService.getCreditCardMonths(startMonth).subscribe((data) => {
       this.creditCardMonths = data;
     });
 
     this.shopFormService.getCreditCardYears().subscribe((data) => {
       this.creditCardYears = data;
-    });
+    }); */
 
     this.updateTotalPrice();
+  }
+
+  setupStripePaymentForm() {
+    var elements = this.stripe.elements();
+    this.cardElement = elements.create('card', {hidePostalCode: true});
+    this.cardElement.mount('#card-element');
+    this.cardElement.on('change', (event:any) => {
+      this.displayError = document.getElementById('card-errors');
+
+      if(event.complete) {
+        this.displayError.textContent = "";
+      } else if (event.error) {
+        this.displayError.textContent = event.error.message;
+      }
+
+    });
   }
 
   getUserInfo() {
@@ -253,55 +281,70 @@ export class CheckoutComponent implements OnInit {
 
     console.log('purchase', purchase);
 
-    // Appeler placeOrder et gérer le téléchargement du PDF
-    this.checkoutService.placeOrder(purchase).subscribe({
-      next: (response) => {
-        console.log('Response:', response);
+    this.paymentInfo.amount = this.totalPrice * 100;
+    this.paymentInfo.currency = "EUR";
 
-        const pdfBlob = response.body;
-
-        // Vérifier que le PDF n'est pas nul
-        if (pdfBlob) {
-          // Récupérer le nom du fichier à partir de l'en-tête Content-Disposition
-          const contentDisposition = response.headers.get(
-            'Content-Disposition'
-          );
-          let fileName = 'receipt.pdf'; // Nom par défaut
-
-          console.log(contentDisposition)
-
-          // Si l'en-tête Content-Disposition contient un nom de fichier
-          if (contentDisposition) {
-            const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
-
-            // Vérifier que fileNameMatch n'est pas nul et a plus d'un élément
-            if (fileNameMatch && fileNameMatch.length > 1) {
-              fileName = fileNameMatch[1];
+    if(!this.checkoutFormGroup.invalid && this.displayError.textContent === "") {
+      this.checkoutService.createPaymentIntent(this.paymentInfo).subscribe(
+        (paymentIntentResponse) => {
+          this.stripe.confirmCardPayment(paymentIntentResponse.client_secret,
+            {
+              payment_method: {
+                card: this.cardElement
+              },
+            },
+            {
+              handleActions: false
             }
-          }
+          ).then((result: any) => {
+            if (result.error) {
+              alert(`There were an error: ${result.error.message}`)
+            } else {
+              this.checkoutService.placeOrder(purchase).subscribe({
+                next: (response) => {
+                  console.log('Response:', response);
 
-          // Créer un lien de téléchargement pour le PDF
-          const downloadURL = URL.createObjectURL(
-            new Blob([pdfBlob], { type: 'application/pdf' })
-          );
-          const link = document.createElement('a');
-          link.href = downloadURL;
-          link.download = fileName;
-          link.click();
+                  const pdfBlob = response.body;
 
-          // Révoquer l'URL après le téléchargement pour libérer les ressources
-          URL.revokeObjectURL(downloadURL);
+                  if (pdfBlob) {
+                    const contentDisposition = response.headers.get(
+                      'Content-Disposition'
+                    );
+                    let fileName = 'receipt.pdf';
 
-          // Réinitialiser le panier après le téléchargement (optionnel)
-          this.resetCart(fileName);
-        } else {
-          console.error('PDF Blob is null');
+                    if (contentDisposition) {
+                      const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
+
+                      if (fileNameMatch && fileNameMatch.length > 1) {
+                        fileName = fileNameMatch[1];
+                      }
+                    }
+
+                    const downloadURL = URL.createObjectURL(
+                      new Blob([pdfBlob], { type: 'application/pdf' })
+                    );
+                    const link = document.createElement('a');
+                    link.href = downloadURL;
+                    link.download = fileName;
+                    link.click();
+                    URL.revokeObjectURL(downloadURL);
+                    this.resetCart(fileName);
+                  } else {
+                    console.error('PDF Blob is null');
+                  }
+                },
+                error: (err) => {
+                  console.log('There was an error:', err.message);
+                }
+              });
+            }
+          })
         }
-      },
-      error: (err) => {
-        console.log('There was an error:', err.message);
-      }
-    });
+      );
+    } else {
+      this.checkoutFormGroup.markAllAsTouched();
+      return;
+    }
 }
 
 
@@ -356,7 +399,7 @@ export class CheckoutComponent implements OnInit {
     return {
       totalPrice: this.totalPrice.toFixed(2).toString(),
       totalQuantity: this.totalQuantity.toString(),
-      paymentMethod: this.creditCardType?.value,
+      paymentMethod: this.creditCardType?.value || 'Visa',
       paymentStatus: 'Accepted',
       deliveryMethod: deliveryMethod,
       deliveryStatus: 'Delivered',
