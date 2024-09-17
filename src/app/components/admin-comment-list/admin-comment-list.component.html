@@ -31,7 +31,7 @@
           <td>{{ comment.grade }}</td>
           <td>{{ comment.dateCreated | date }}</td>
           <td>
-            <button type="button" class="btn btn-primary" routerLink="/admin/edit-comment/{{ comment.id }}">Edit</button>
+            <!-- <button type="button" class="btn btn-primary" routerLink="/admin/edit-comment/{{ comment.id }}">Edit</button> -->
             <button type="button" class="btn btn-danger" (click)="deleteComment(+comment.id)">Delete</button>
           </td>
         </tr>
